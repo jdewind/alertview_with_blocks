@@ -8,7 +8,7 @@
 
 #import "AlertViewWithBlocksAppDelegate.h"
 #import "DemoController.h"
-#import "UIAlertView+BlockSupport.h"
+#import "AlertWithBlocksDemo.h"
 
 @implementation AlertViewWithBlocksAppDelegate
 
@@ -20,43 +20,14 @@
   [window addSubview:viewController.view];
   [window makeKeyAndVisible];
 	
-  [viewController.button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchDown];
-  
-  [UIAlertView show:@"Demo" message:@"This is a demo" button:@"Okay" whenDismissed:^(UIAlertView *view, NSUInteger buttonIndex) {
-    viewController.label.text = @"Demo!";
+  [BlockConfirmationAlert show:@"Demo" confirmed:^(UIAlertView *alertView) {
+  	NSLog(@"Confirmed");  
+  } 
+  canceled: ^(UIAlertView *alertView) {
+    NSLog(@"Cancelled");
   }];
-  
   
 	return YES;
-}
-
--(void)buttonClicked:(id)sender {
-  UITextField *textField = [[[UITextField alloc] initWithFrame:CGRectMake(12.0, 45.0, 260.0, 25.0)] autorelease];
-  textField.backgroundColor = [UIColor whiteColor];
-  textField.placeholder = @"Text";
-	
-  UIAlertView *alert = [UIAlertView build:^(AlertViewBlockDelegate *delegate){
-    delegate.presented = ^(UIAlertView *alertView) {
-      [textField becomeFirstResponder];
-    };
-    
-    delegate.dismissed = ^(UIAlertView *alertView, NSUInteger buttonIndex) {
-      if (alertView.cancelButtonIndex != buttonIndex) {
-        [textField resignFirstResponder];
-        viewController.label.text = textField.text;
-      }
-    };    
-  }];
-  
-  alert.title = @"Enter Text";
-  alert.message = @"Padding";
-  [alert addSubview:textField];
-	
-  alert.cancelButtonIndex = [alert addButtonWithTitle:@"Cancel"];
-	[alert addButtonWithTitle:@"Done"];
-  
-  [alert setTransform:CGAffineTransformMakeTranslation(0.0, 80.0)];
-  [alert show];
 }
 
 - (void)dealloc {
