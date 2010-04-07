@@ -1,11 +1,3 @@
-//
-//  alertview_with_blocksAppDelegate.m
-//  alertview_with_blocks
-//
-//  Created by dewindj on 4/6/10.
-//  Copyright __MyCompanyName__ 2010. All rights reserved.
-//
-
 #import "AlertViewWithBlocksAppDelegate.h"
 #import "DemoController.h"
 #import "AlertWithBlocksDemo.h"
