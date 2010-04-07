@@ -22,8 +22,8 @@
 	
   [viewController.button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchDown];
   
-  [UIAlertView show:@"Hello" message:@"A Message" button:@"Okay" whenDismissed:^(UIAlertView *view, NSUInteger buttonIndex) {
-    viewController.label.text = @"Hello!";
+  [UIAlertView show:@"Demo" message:@"This is a demo" button:@"Okay" whenDismissed:^(UIAlertView *view, NSUInteger buttonIndex) {
+    viewController.label.text = @"Demo!";
   }];
   
   
@@ -31,25 +31,32 @@
 }
 
 -(void)buttonClicked:(id)sender {
+  UITextField *textField = [[[UITextField alloc] initWithFrame:CGRectMake(12.0, 45.0, 260.0, 25.0)] autorelease];
+  textField.backgroundColor = [UIColor whiteColor];
+  textField.placeholder = @"Text";
+	
   UIAlertView *alert = [UIAlertView build:^(AlertViewBlockDelegate *delegate){
-    delegate.cancelledBlock = ^(UIAlertView *alertView) {
-    	viewController.label.text = @"Cancelled!";  
+    delegate.presented = ^(UIAlertView *alertView) {
+      [textField becomeFirstResponder];
     };
     
-    delegate.dismissedBlock = ^(UIAlertView *alertView, NSUInteger buttonIndex) {
-      if (buttonIndex > 0) {
-        viewController.label.text = @"Dismissed!";        
+    delegate.dismissed = ^(UIAlertView *alertView, NSUInteger buttonIndex) {
+      if (alertView.cancelButtonIndex != buttonIndex) {
+        [textField resignFirstResponder];
+        viewController.label.text = textField.text;
       }
     };    
   }];
   
-  alert.title = @"Demo";
-  alert.message = @"Hello Everyody!";
-  alert.cancelButtonIndex = 0;
-  [alert addButtonWithTitle:@"Cancel"];
-  [alert addButtonWithTitle:@"Confirm"];
-  [alert show];
+  alert.title = @"Enter Text";
+  alert.message = @"Padding";
+  [alert addSubview:textField];
+	
+  alert.cancelButtonIndex = [alert addButtonWithTitle:@"Cancel"];
+	[alert addButtonWithTitle:@"Done"];
   
+  [alert setTransform:CGAffineTransformMakeTranslation(0.0, 80.0)];
+  [alert show];
 }
 
 - (void)dealloc {

@@ -7,20 +7,20 @@ typedef void (^AlertDelegateBlock)(AlertViewBlockDelegate *delegate);
 
 @interface AlertViewBlockDelegate : NSObject<UIAlertViewDelegate>
 {
-  AlertActionBlock buttonClickedBlock;
-  AlertActionBlock dismissedBlock;
-  AlertActionBlock willDismissBlock;
-  AlertBlock cancelledBlock;
-  AlertBlock presentedBlock;
-  AlertBlock willPresentBlock;
+  AlertActionBlock buttonClicked;
+  AlertActionBlock dismissed;
+  AlertActionBlock willDismiss;
+  AlertBlock cancelled;
+  AlertBlock presented;
+  AlertBlock willPresent;
 }
 
-@property(copy) AlertActionBlock buttonClickedBlock;
-@property(copy) AlertActionBlock dismissedBlock;
-@property(copy) AlertActionBlock willDismissBlock;
-@property(copy) AlertBlock cancelledBlock;
-@property(copy) AlertBlock presentedBlock;
-@property(copy) AlertBlock willPresentBlock;
+@property(copy) AlertActionBlock buttonClicked;
+@property(copy) AlertActionBlock dismissed;
+@property(copy) AlertActionBlock willDismiss;
+@property(copy) AlertBlock cancelled;
+@property(copy) AlertBlock presented;
+@property(copy) AlertBlock willPresent;
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
